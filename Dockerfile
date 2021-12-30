@@ -1,5 +1,5 @@
 # Maintainer https://github.com/Tetricz
-ARG OPENJDK_VERSION=16-alpine
+ARG OPENJDK_VERSION=17-alpine
 # https://hub.docker.com/_/openjdk
 FROM openjdk:${OPENJDK_VERSION}
 
