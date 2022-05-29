@@ -2,7 +2,7 @@
 ARG OPENJDK_VERSION=17-alpine
 # https://hub.docker.com/_/openjdk
 FROM openjdk:${OPENJDK_VERSION}
-RUN apk add --no-cache jq curl
+RUN apk add --no-cache jq curl bash
 RUN curl -L https://meta.fabricmc.net/v2/versions/loader/1.18.2/0.14.6/0.10.2/server/jar --output fabric-server-launch.jar
 ENV MEMORY=2G
 
