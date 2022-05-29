@@ -1,5 +1,4 @@
 #!/bin/bash
-#create folders for updater information
 mkdir -p /minecraft/updater
 mkdir -p /minecraft/mods
 mkdir -p /tmp/res

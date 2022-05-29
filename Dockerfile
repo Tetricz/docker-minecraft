@@ -11,8 +11,8 @@ COPY ./modlist /modlist-example
 
 RUN chmod +x /update-script.sh
 
-WORKDIR /minecraft
 EXPOSE 25565/tcp 25565/udp 25575/tcp
 
 ENTRYPOINT [ "/update-script.sh" ]
+WORKDIR /minecraft
 CMD java -Xmx${MEMORY} -Xms${MEMORY} -jar fabric-server-launch.jar nogui
