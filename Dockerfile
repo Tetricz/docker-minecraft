@@ -9,6 +9,8 @@ ENV MEMORY=2G
 COPY ./update-script.sh /update-script.sh
 COPY ./modlist /modlist-example
 
+RUN chmod +x /update-script.sh
+
 WORKDIR /minecraft
 EXPOSE 25565/tcp 25565/udp 25575/tcp
 
