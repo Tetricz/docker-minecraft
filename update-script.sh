@@ -41,6 +41,8 @@ do
         echo "Updating..."
         curl -L "${url}" --output "${filename}"
         ls -al
+        sha512sum $filename
+        echo $recorded_hash
         sha512sum -c $filename.sha512
         if [ $? -eq 0 ]; then
             echo "$filename is updated"
