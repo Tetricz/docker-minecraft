@@ -25,7 +25,7 @@ do
     recorded_hash=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.18.2")] | .[0].sha512')
     #create sha512 file
     touch /tmp/$filename.sha512
-    echo "$recorded_hash /tmp/$filename" > /tmp/$filename.sha512
+    echo "$recorded_hash $filename" > /tmp/$filename.sha512
     #echo "curl -sL \"${url}\" --output \"${filename}\""
 
     #markdown new files, so that we can remove the old ones
@@ -39,8 +39,9 @@ do
         rm /tmp/$filename
     else
         echo "Updating..."
-        curl -L "${url}" --output "/tmp/${filename}"
-        sha512sum -c /tmp/$filename.sha512
+        curl -L "${url}" --output "${filename}"
+        ls -al
+        sha512sum -c $filename.sha512
         if [ $? -eq 0 ]; then
             echo "$filename is updated"
             mv /tmp/$filename /minecraft/mods/$filename
