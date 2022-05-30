@@ -6,6 +6,7 @@ mkdir -p /tmp/res
 if [ ! -f "/minecraft/updater/modlist" ]
 then
     cp /modlist /minecraft/updater/modlist
+    touch /minecraft/updater/modkeep
 fi
 
 #get response from modrinth for mods
@@ -16,7 +17,7 @@ do
 done < /minecraft/updater/modlist
 #copy mods to tmp folder for hashchecking, this should be in ram
 cp /minecraft/mods/* /tmp/
-
+cp /minecraft/updater/modkeep /tmp/uptodate
 for file in $(ls /tmp/res/*res);
 do
     #takes api response from modrinth and parses
@@ -55,8 +56,12 @@ do
         rm "$i"
     fi
 done
-#download fabric and launch server
-#TODO add file checking for fabric server jar
+
+#fabric and launch server
+if [ ! -f "/minecraft/fabric-server-launch.jar" ]
+then
+    cp /fabric-server-launch.jar /minecraft/fabric-server-launch.jar
+    cp /server.jar /minecraft/server.jar
+fi
 cd /minecraft
-curl -L https://meta.fabricmc.net/v2/versions/loader/1.18.2/0.14.6/0.10.2/server/jar --output fabric-server-launch.jar
 java -Xmx${MEMORY} -Xms${MEMORY} -jar fabric-server-launch.jar nogui
