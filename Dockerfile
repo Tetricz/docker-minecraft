@@ -13,4 +13,3 @@ RUN chmod +x /update-script.sh
 EXPOSE 25565/tcp 25565/udp 25575/tcp
 
 ENTRYPOINT [ "/update-script.sh" ]
-CMD java -Xmx${MEMORY} -Xms${MEMORY} -jar fabric-server-launch.jar nogui

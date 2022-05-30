@@ -58,3 +58,4 @@ do
 done
 cd /minecraft
 curl -L https://meta.fabricmc.net/v2/versions/loader/1.18.2/0.14.6/0.10.2/server/jar --output fabric-server-launch.jar
+java -Xmx${MEMORY} -Xms${MEMORY} -jar fabric-server-launch.jar nogui
