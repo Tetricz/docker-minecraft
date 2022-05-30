@@ -25,8 +25,7 @@ do
     recorded_hash=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.18.2")] | .[0].sha512')
     #create sha512 file
     touch /tmp/$filename.sha512
-    echo $recorded_hash > /tmp/$filename.sha512
-    echo $filename >> /tmp/$filename.sha512
+    echo `$recorded_hash $filename`> /tmp/$filename.sha512
     #echo "curl -sL \"${url}\" --output \"${filename}\""
 
     #markdown new files, so that we can remove the old ones
