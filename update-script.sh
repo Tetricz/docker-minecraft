@@ -15,7 +15,7 @@ do
     readarray -t strarr <<< "$line"
     curl -s "https://api.modrinth.com/v2/project/${line}/version" -o "/tmp/res/${line}.res"
 done < /minecraft/updater/modlist
-
+cp /minecraft/mods/* /tmp/
 
 for file in $(ls /tmp/res/*res);
 do
@@ -27,8 +27,6 @@ do
     touch /tmp/$filename.sha512
     echo "$recorded_hash $filename" > /tmp/$filename.sha512
     #echo "curl -sL \"${url}\" --output \"${filename}\""
-    #download actual mod if needed
-    cp /minecraft/mods/* /tmp/
 
     #markdown new files, so that we can remove the old ones
     echo "/minecraft/mods/$filename" >> uptodate
@@ -52,7 +50,7 @@ do
     fi
 done;
 
-for i in /minecraft/mods/*;
+for i in $(ls /minecraft/mods/*jar);
 do
     if ! grep -qxFe "$i" /tmp/uptodate; then
         echo "Deleting: $i"
