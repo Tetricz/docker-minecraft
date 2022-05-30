@@ -1,6 +1,5 @@
 #!/bin/bash
 cd /tmp
-ls -al
 mkdir -p /minecraft/updater
 mkdir -p /minecraft/mods
 mkdir -p /tmp/res
@@ -16,7 +15,7 @@ do
     curl -s "https://api.modrinth.com/v2/project/${line}/version" -o "/tmp/res/${line}.res"
 done < /minecraft/updater/modlist
 cp /minecraft/mods/* /tmp/
-
+ls -al
 for file in $(ls /tmp/res/*res);
 do
     #gets api response from modrinth and parses
