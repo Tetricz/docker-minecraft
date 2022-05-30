@@ -5,11 +5,10 @@ FROM openjdk:${OPENJDK_VERSION}
 RUN apk add --no-cache jq curl bash
 ENV MEMORY=2G
 
-COPY ./update-script.sh /update-script.sh
-COPY ./modlist /modlist-example
+COPY . /
 
-RUN chmod +x /update-script.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 25565/tcp 25565/udp 25575/tcp
 
-ENTRYPOINT [ "/update-script.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]

@@ -5,7 +5,7 @@ mkdir -p /minecraft/mods
 mkdir -p /tmp/res
 if [ ! -f "/minecraft/updater/modlist" ]
 then
-    cp /modlist-example /minecraft/updater/modlist
+    cp /modlist /minecraft/updater/modlist
 fi
 
 #get response from modrinth for mods
@@ -23,8 +23,7 @@ do
     url=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.18.2")] | .[0].url')
     recorded_hash=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.18.2")] | .[0].sha512')
     #create sha512 file
-    touch /tmp/$filename.sha512
-    echo "${recorded_hash} ${filename}"> /tmp/$filename.sha512
+    echo "${recorded_hash} ${filename}" > $filename.sha512
     #echo "curl -sL \"${url}\" --output \"${filename}\""
 
     #markdown new files, so that we can remove the old ones
