@@ -23,15 +23,14 @@ do
     url=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.18.2")] | .[0].url')
     recorded_hash=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.18.2")] | .[0].sha512')
     #create sha512 file
-    echo "${recorded_hash}" > $filename.sha512
+    echo "${recorded_hash}${filename}" > $filename.sha512
     #echo "curl -sL \"${url}\" --output \"${filename}\""
 
     #markdown new files, so that we can remove the old ones
     echo "/minecraft/mods/$filename" >> uptodate
     
     #check if current file is up to date
-    #sha512sum -c $filename.sha512
-    echo "$(cat $filename.sha512) $filename" | sha512sum --check
+    sha512sum -c $filename.sha512
     #download new files and mv into mods folder
     if [ $? -eq 0 ]; then
         echo "$filename is up to date"
