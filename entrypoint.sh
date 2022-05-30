@@ -14,18 +14,18 @@ do
     readarray -t strarr <<< "$line"
     curl -s "https://api.modrinth.com/v2/project/${line}/version" -o "/tmp/res/${line}.res"
 done < /minecraft/updater/modlist
+#copy mods to tmp folder for hashchecking, this should be in ram
 cp /minecraft/mods/* /tmp/
-ls -al
+
 for file in $(ls /tmp/res/*res);
 do
-    #gets api response from modrinth and parses
+    #takes api response from modrinth and parses
     filename=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.18.2")] | .[0].filename')
     url=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.18.2")] | .[0].url')
     recorded_hash=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.18.2")] | .[0].sha512')
+
     #create sha512 file
     echo "${recorded_hash}  ${filename}" > $filename.sha512
-    #echo "curl -sL \"${url}\" --output \"${filename}\""
-    cat $filename.sha512
     #markdown new files, so that we can remove the old ones
     echo "/minecraft/mods/$filename" >> uptodate
     
@@ -47,6 +47,7 @@ do
     fi
 done;
 
+#delete out of date modes
 for i in $(ls /minecraft/mods/*jar);
 do
     if ! grep -qxFe "$i" /tmp/uptodate; then
@@ -54,6 +55,8 @@ do
         rm "$i"
     fi
 done
+#download fabric and launch server
+#TODO add file checking for fabric server jar
 cd /minecraft
 curl -L https://meta.fabricmc.net/v2/versions/loader/1.18.2/0.14.6/0.10.2/server/jar --output fabric-server-launch.jar
 java -Xmx${MEMORY} -Xms${MEMORY} -jar fabric-server-launch.jar nogui
