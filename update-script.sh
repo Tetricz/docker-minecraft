@@ -1,5 +1,6 @@
 #!/bin/bash
 cd /
+ls -al
 mkdir -p /minecraft/updater
 mkdir -p /minecraft/mods
 mkdir -p /tmp/res
@@ -40,7 +41,7 @@ do
         rm /tmp/$filename
     else
         echo "Updating..."
-        curl -sL "${url}" --output "/tmp/${filename}"
+        curl -L "${url}" --output "/tmp/${filename}"
         sha512sum -c /tmp/$filename.sha512
         if [ $? -eq 0 ]; then
             echo "$filename is updated"
