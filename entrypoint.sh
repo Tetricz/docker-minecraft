@@ -58,7 +58,7 @@ do
 done
 
 #add a file to say that this version has been copied
-if [ ! -f "/1.19"]
+if [ ! -f "/1.19" ]
 then
     cp /fabric-server-launch.jar /minecraft/fabric-server-launch.jar
     cp /server.jar /minecraft/server.jar
