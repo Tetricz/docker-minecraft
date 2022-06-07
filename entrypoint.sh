@@ -57,7 +57,14 @@ do
     fi
 done
 
-#fabric and launch server
+#add a file to say that this version has been copied
+if [ ! -f "/1.19"]
+then
+    cp /fabric-server-launch.jar /minecraft/fabric-server-launch.jar
+    cp /server.jar /minecraft/server.jar
+    touch /1.19
+fi
+#fabric and launch server copy check in case they were deleted
 if [ ! -f "/minecraft/fabric-server-launch.jar" ]
 then
     cp /fabric-server-launch.jar /minecraft/fabric-server-launch.jar
