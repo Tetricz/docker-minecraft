@@ -21,9 +21,9 @@ cp /minecraft/updater/modkeep /tmp/uptodate
 for file in $(ls /tmp/res/*res);
 do
     #takes api response from modrinth and parses
-    filename=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.18.2")] | .[0].filename')
-    url=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.18.2")] | .[0].url')
-    recorded_hash=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.18.2")] | .[0].sha512')
+    filename=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.19")] | .[0].filename')
+    url=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.19")] | .[0].url')
+    recorded_hash=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.19")] | .[0].sha512')
 
     #create sha512 file
     echo "${recorded_hash}  ${filename}" > $filename.sha512
