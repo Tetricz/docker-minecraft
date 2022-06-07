@@ -3,6 +3,13 @@ cd /tmp
 mkdir -p /minecraft/updater
 mkdir -p /minecraft/mods
 mkdir -p /tmp/res
+#remove files that could cause issues from previous boot
+if [ -f /tmp/uptodate ]
+then
+    rm -f /tmp/uptodate
+    rm -f /tmp/res/*
+fi
+#copy default modlist if not found in folder
 if [ ! -f "/minecraft/updater/modlist" ]
 then
     cp /modlist /minecraft/updater/modlist
