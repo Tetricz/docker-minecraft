@@ -79,3 +79,4 @@ then
 fi
 cd /minecraft
 java -Xmx${MEMORY} -Xms${MEMORY} -jar fabric-server-launch.jar nogui
+exit 0
