@@ -28,9 +28,9 @@ cp /minecraft/updater/modkeep /tmp/uptodate
 for file in $(ls /tmp/res/*res);
 do
     #takes api response from modrinth and parses
-    filename=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.19")] | .[0].filename')
-    url=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.19")] | .[0].url')
-    recorded_hash=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.19")] | .[0].sha512')
+    filename=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.19.1")] | .[0].filename')
+    url=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.19.1")] | .[0].url')
+    recorded_hash=$(cat $file | jq -cr '[.[] | {(.loaders[]): .game_versions[], filename: .files[].filename, url: .files[].url, sha512: .files[].hashes.sha512} | select(.fabric == "1.19.1")] | .[0].sha512')
 
     #create sha512 file
     echo "${recorded_hash}  ${filename}" > $filename.sha512
@@ -65,11 +65,11 @@ do
 done
 
 #add a file to say that this version has been copied
-if [ ! -f "/1.19" ]
+if [ ! -f "/1.19.1" ]
 then
     cp /fabric-server-launch.jar /minecraft/fabric-server-launch.jar
     cp /server.jar /minecraft/server.jar
-    touch /1.19
+    touch /1.19.1
 fi
 #fabric and launch server copy check in case they were deleted
 if [ ! -f "/minecraft/fabric-server-launch.jar" ]
